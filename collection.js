@@ -1,6 +1,8 @@
 define('collections/collection', [
 	'class', 'collections/collection-interface'
 ], function(Class, CollectionInterface) {
+	var emptyArray = [];
+
 	/**
 	 * @class Collection<T>
 	 * @implements {Collections.CollectionInterface}
@@ -96,13 +98,13 @@ define('collections/collection', [
 		 * @returns {Array<T>}
 		 */
 		removeRange: function(index, count) {
-			if (index < 0 || index >= this.items.length || count < 0) {
+			if (index < 0 || count < 0 || index + count > this.items.length) {
 				throw new Error('Index out of bounds.');
 			}
 			if (count > 0) {
 				return this.items.splice(index, count);
 			}
-			return null;
+			return emptyArray;
 		},
 
 		/**
@@ -115,7 +117,7 @@ define('collections/collection', [
 				this.items = [];
 				return oldItems;
 			}
-			return null;
+			return emptyArray;
 		},
 
 		/**
@@ -141,7 +143,7 @@ define('collections/collection', [
 		 * @returns {Array<T>}
 		 */
 		replaceRange: function(index, count, items) {
-			if (index < 0 || index >= this.items.length || count < 0 || index + count > this.items.length) {
+			if (index < 0 || count < 0 || index + count > this.items.length) {
 				throw new Error('Index out of bounds.');
 			}
 			if (count > 0 || items.length > 0) {
@@ -149,7 +151,7 @@ define('collections/collection', [
 				args.unshift(index, count);
 				return this.items.splice.apply(this.items, args);
 			}
-			return null;
+			return emptyArray;
 		},
 
 		/**
@@ -160,10 +162,10 @@ define('collections/collection', [
 		setItems: function(items) {
 			if (this.items.length > 0 || items.length > 0) {
 				var oldItems = this.items;
-				this.items = items;
+				this.items = items.slice();
 				return oldItems;
 			}
-			return null;
+			return emptyArray;
 		},
 
 		/**

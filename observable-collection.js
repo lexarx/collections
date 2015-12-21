@@ -2,7 +2,7 @@ define('collections/observable-collection', [
 	'collections/collection', 'event', 'collections/collection-change',
 	'collections/observable-collection-interface'
 ], function(Collection, Event, CollectionChange, ObservableCollectionInterface) {
-	var nothing = [];
+	var emptyArray = [];
 
 	/**
 	 * @class ObservableCollection<T>
@@ -26,25 +26,12 @@ define('collections/observable-collection', [
 
 		/**
 		 * @override
-		 * @param {Array<T>} items
-		 * @returns {Array<T>}
-		 */
-		setItems: function(items) {
-			var oldItems = this.super(items);
-			if (oldItems !== null) {
-				this.notifyChanged(items, oldItems, items);
-			}
-			return oldItems;
-		},
-
-		/**
-		 * @override
 		 * @param {T} item
 		 */
 		add: function(item) {
 			var index = this.items.length;
 			this.super(item);
-			this.notifyChanged(index, nothing, [item]);
+			this.notifyChanged(index, emptyArray, [item]);
 		},
 
 		/**
@@ -55,7 +42,7 @@ define('collections/observable-collection', [
 			var index = this.items.length;
 			this.super(items);
 			if (items.length > 0) {
-				this.notifyChanged(index, nothing, items);
+				this.notifyChanged(index, emptyArray, items);
 			}
 		},
 
@@ -66,7 +53,7 @@ define('collections/observable-collection', [
 		 */
 		insert: function(index, item) {
 			this.super(index, item);
-			this.notifyChanged(index, nothing, [item]);
+			this.notifyChanged(index, emptyArray, [item]);
 		},
 
 		/**
@@ -77,7 +64,7 @@ define('collections/observable-collection', [
 		insertRange: function(index, items) {
 			this.super(index, items);
 			if (items.length > 0) {
-				this.notifyChanged(index, nothing, items);
+				this.notifyChanged(index, emptyArray, items);
 			}
 		},
 
@@ -89,7 +76,7 @@ define('collections/observable-collection', [
 		remove: function(item) {
 			var index = this.super(item);
 			if (index !== -1) {
-				this.notifyChanged(index, [item], nothing);
+				this.notifyChanged(index, [item], emptyArray);
 			}
 			return index;
 		},
@@ -101,7 +88,7 @@ define('collections/observable-collection', [
 		 */
 		removeAt: function(index) {
 			var oldItems = this.super(index);
-			this.notifyChanged(index, oldItems, nothing);
+			this.notifyChanged(index, oldItems, emptyArray);
 			return oldItems;
 		},
 
@@ -113,8 +100,8 @@ define('collections/observable-collection', [
 		 */
 		removeRange: function(index, count) {
 			var oldItems = this.super(index, count);
-			if (oldItems !== null) {
-				this.notifyChanged(index, oldItems, nothing);
+			if (oldItems.length > 0) {
+				this.notifyChanged(index, oldItems, emptyArray);
 			}
 			return oldItems;
 		},
@@ -125,23 +112,8 @@ define('collections/observable-collection', [
 		 */
 		clear: function() {
 			var oldItems = this.super();
-			if (oldItems !== null) {
-				this.notifyChanged(0, oldItems, nothing);
-			}
-			return oldItems;
-		},
-
-		/**
-		 * @override
-		 * @param {Number} index
-		 * @param {Number} count
-		 * @param {Array<T>} items
-		 * @returns {Array<T>}
-		 */
-		replaceRange: function(index, count, items) {
-			var oldItems = this.super(index, count, items);
-			if (oldItems !== null) {
-				this.notifyChanged(index, oldItems, items);
+			if (oldItems.length > 0) {
+				this.notifyChanged(0, oldItems, emptyArray);
 			}
 			return oldItems;
 		},
@@ -156,6 +128,34 @@ define('collections/observable-collection', [
 			var oldItem = this.super(index, item);
 			this.notifyChanged(index, [oldItem], [item]);
 			return oldItem;
+		},
+
+		/**
+		 * @override
+		 * @param {Number} index
+		 * @param {Number} count
+		 * @param {Array<T>} items
+		 * @returns {Array<T>}
+		 */
+		replaceRange: function(index, count, items) {
+			var oldItems = this.super(index, count, items);
+			if (oldItems.length > 0 || items.length > 0) {
+				this.notifyChanged(index, oldItems, items);
+			}
+			return oldItems;
+		},
+
+		/**
+		 * @override
+		 * @param {Array<T>} items
+		 * @returns {Array<T>}
+		 */
+		setItems: function(items) {
+			var oldItems = this.super(items);
+			if (oldItems.length > 0 || items.length > 0) {
+				this.notifyChanged(items, oldItems, items);
+			}
+			return oldItems;
 		},
 		
 		/**
