@@ -1,6 +1,6 @@
 define('collections/pool', [
-	'collections/pool-interface'
-], function(PoolInterface) {
+	'class', 'collections/pool-interface'
+], function(Class, PoolInterface) {
 	/**
 	 * @class Pool<T>
 	 * @implements {Collections.PoolInterface}
