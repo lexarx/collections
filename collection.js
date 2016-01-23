@@ -147,8 +147,7 @@ define('collections/collection', [
 				throw new Error('Index out of bounds.');
 			}
 			if (count > 0 || items.length > 0) {
-				var args = items.slice();
-				args.unshift(index, count);
+				var args = [index, count].concat(items);
 				return this.items.splice.apply(this.items, args);
 			}
 			return emptyArray;
