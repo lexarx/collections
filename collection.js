@@ -244,7 +244,7 @@ define('collections/collection', [
 		 */
 		each: function(iterator, context) {
 			for (var i = 0; i < this.items.length; i++) {
-				iterator.call(context, this.items[i]);
+				iterator.call(context, this.items[i], i);
 			}
 		},
 
@@ -256,7 +256,7 @@ define('collections/collection', [
 		 */
 		every: function(iterator, context) {
 			for (var i = 0; i < this.items.length; i++) {
-				var value = iterator.call(context, this.items[i]);
+				var value = iterator.call(context, this.items[i], i);
 				if (!value) {
 					return false;
 				}
@@ -272,7 +272,7 @@ define('collections/collection', [
 		 */
 		find: function(iterator, context) {
 			for (var i = 0; i < this.items.length; i++) {
-				var value = iterator.call(context, this.items[i]);
+				var value = iterator.call(context, this.items[i], i);
 				if (value) {
 					return this.items[i];
 				}
@@ -305,7 +305,7 @@ define('collections/collection', [
 		map: function(iterator, context) {
 			var values = [];
 			for (var i = 0; i < this.items.length; i++) {
-				var value = iterator.call(context, this.items[i]);
+				var value = iterator.call(context, this.items[i], i);
 				values.push(value);
 			}
 			return values;
