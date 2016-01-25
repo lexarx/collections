@@ -1,5 +1,5 @@
 define('collections/observable-collection-interface', [
-	'interface', 'collections/observable-collection-interface'
+	'interface', 'collections/collection-interface'
 ], function(Interface, CollectionInterface) {
 	/**
 	 * @interface ObservableCollectionInterface
