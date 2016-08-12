@@ -1,11 +1,11 @@
-define('collections/pool-interface', [
-	'interface'
-], function(Interface) {
-	/**
-	 * @interface PoolInterface
-	 * @namespace Collections
-	 * @method pop
-	 * @method pool
-	 */
-	return new Interface();
-});
+var Interface = require('interface');
+
+/**
+ * @interface PoolInterface
+ * @namespace Collections
+ * @method pop
+ * @method pool
+ */
+var PoolInterface = new Interface();
+
+module.exports = PoolInterface;

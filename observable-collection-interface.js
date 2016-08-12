@@ -1,13 +1,14 @@
-define('collections/observable-collection-interface', [
-	'interface', 'collections/collection-interface'
-], function(Interface, CollectionInterface) {
-	/**
-	 * @interface ObservableCollectionInterface
-	 * @namespace Collections
-	 * @extends CollectionInterface
-	 * @property {Event} changed
-	 */
-	return new Interface([
-		CollectionInterface
-	]);
-});
+var Interface = require('interface');
+var CollectionInterface = require('collections/collection-interface');
+
+/**
+ * @interface ObservableCollectionInterface
+ * @namespace Collections
+ * @extends CollectionInterface
+ * @property {Event} changed
+ */
+var ObservableCollectionInterface = new Interface([
+	CollectionInterface
+]);
+
+module.exports = ObservableCollectionInterface;
