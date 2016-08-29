@@ -154,7 +154,7 @@ var ObservableCollection = Collection.extend({
 	setItems: function(items) {
 		var oldItems = this.super(items);
 		if (oldItems.length > 0 || items.length > 0) {
-			this.notifyChanged(items, oldItems, items);
+			this.notifyChanged(0, oldItems, items);
 		}
 		return oldItems;
 	},
